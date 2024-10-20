@@ -16,7 +16,7 @@ from karaoke.results import Result
 import karaoke.urls as my_urls
 
 
-prefix = '/hhh'  # url prefix, url的前缀
+prefix = ''  # url prefix, url的前缀
 app = FastAPI()
 register_tortoise(app=app, config=settings.TORTOISE_ORM)
 templates = Jinja2Templates(directory="templates")
