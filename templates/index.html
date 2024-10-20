@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>卡拉OK</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/toast.style.css">
+    <script type="text/javascript" src="/static/js/jq.min.js"></script>
+    <script type="text/javascript" src="/static/js/qrcode.min.js"></script>
+    <script type="text/javascript" src="/static/js/toast.script.js"></script>
+    <script type="text/javascript" src="/static/js/fenye.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="head">
+        <div style="display: flex; align-items: center;">
+            <input id="file-input" type="file" multiple accept=".mp3, .mp4" style="display: none;">
+            <input id="file-search" type="text" style="height: 30px; margin-left: 2px; margin-right: 8px;" placeholder="请输入歌曲或歌手名字 ~" autocomplete="off">
+            <a href="#" id="search" style="margin-right: 50px;">搜索</a>
+            <a href="/dealVideo" id="pre-mp4" target="_blank">视频预处理</a>
+            <a href="#" id="file-upload" style="">上传文件</a>
+            <a href="#" id="generate_code" style="">手机点歌</a>
+            <div class="qrcode"><div id="qrcode"></div></div>
+            <a href="/sing" target="_blank" style="">开始K歌</a>
+        </div>
+        <div style="display: flex; align-items: center; margin-top: 1rem;">
+            <a href="#" onclick="get_song_list()" style="">曲库列表</a>
+            <a href="#" onclick="get_history_list('history')" style="">K歌历史</a>
+            <a href="#" onclick="get_history_list('usually')" style="">常点的歌</a>
+            <a href="/song" target="_blank" style="">控制台(已点<span id="addSongs">0</span>)</a>
+        </div>
+    </div>
+    <div style="margin-top: 3rem;">
+        <table style="display: none;">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">名称</th>
+                    <th style="width: 30%;" id="create-time">创建时间</th>
+                    <th style="width: 15%;">操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="fenye"><ul id="paging" class="pagination"></ul></div>
+</div>
+<div class="modal_cover"><div class="modal_gif"></div></div>
+</body>
+<script>
+    localStorage.setItem("server", "{{ prefix }}");
+</script>
+<script type="text/javascript" src="/static/js/index.js"></script>
+</html>
