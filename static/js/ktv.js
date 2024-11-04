@@ -94,26 +94,25 @@ tryPlay = () => {
 
 // 同步时间
 video.addEventListener('timeupdate', () => {
-    if (Math.abs(video.currentTime - vocals.currentTime) > 0.1) {
+    if (Math.abs(video.currentTime - vocals.currentTime) > 0.2 || Math.abs(accompaniment.currentTime - video.currentTime) > 0.2) {
         vocals.currentTime = video.currentTime;
         accompaniment.currentTime = video.currentTime;
     }
 });
 
-vocals.addEventListener('timeupdate', () => {
-    if (Math.abs(vocals.currentTime - video.currentTime) > 0.1) {
-        video.currentTime = vocals.currentTime;
-        accompaniment.currentTime = vocals.currentTime;
-    }
-});
+// vocals.addEventListener('timeupdate', () => {
+//     if (Math.abs(vocals.currentTime - video.currentTime) > 0.2) {
+//         video.currentTime = vocals.currentTime;
+//         accompaniment.currentTime = vocals.currentTime;
+//     }
+// });
 
-accompaniment.addEventListener('timeupdate', () => {
-    if (Math.abs(accompaniment.currentTime - video.currentTime) > 0.1) {
-        video.currentTime = accompaniment.currentTime;
-        vocals.currentTime = accompaniment.currentTime;
-
-    }
-});
+// accompaniment.addEventListener('timeupdate', () => {
+//     if (Math.abs(accompaniment.currentTime - video.currentTime) > 0.2) {
+//         video.currentTime = accompaniment.currentTime;
+//         vocals.currentTime = accompaniment.currentTime;
+//     }
+// });
 
 // 暂停和播放事件
 video.addEventListener('pause', () => {

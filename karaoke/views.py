@@ -172,7 +172,7 @@ async def history_list(query_type: str) -> Result:
             songs = await History.filter(is_sing=1).order_by('-update_time').offset(0).limit(200)
             msg = "查询K歌历史列表成功"
         elif query_type == "usually":
-            songs = await History.filter(is_sing=1).order_by('-times').offset(0).limit(200)
+            songs = await History.all().order_by('-times').offset(0).limit(200)
             msg = "查询经常K歌的歌曲列表成功"
         elif query_type == "pendingAll":
             songs = await History.filter(is_sing=-1)
@@ -216,6 +216,7 @@ async def set_singing(file_id: int) -> Result:
     try:
         history = await History.get(id=file_id)
         history.is_sing = -1
+        history.is_top = 0
         await history.save()
         result.msg = f"{history.name} 设置-1成功"
         logger.info(result.msg)
@@ -231,6 +232,7 @@ async def set_singed(file_id: int) -> Result:
     try:
         history = await History.get(id=file_id)
         history.is_sing = 1
+        history.is_top = 0
         history.times = history.times + 1
         await history.save()
         result.msg = f"{history.name} 设置1成功"
@@ -281,7 +283,7 @@ async def deal_video(file_name: str) -> Result:
         video_file = os.path.join(VIDEO_PATH, f"{name}.mp4")
         cmd3 = ['ffmpeg', '-i', no_voice_file, '-map_metadata', '0', '-c:v', 'copy', '-c:a', 'copy', '-movflags', '+faststart', video_file]
         subprocess.run(cmd3, check=True)
-        result.data = {"mp3": f"{name}.mp3", "video": f"{name}.mp4"}
+        result.data = {"mp3": f"{name}.wav", "video": f"{name}.mp4"}
         logger.info(result.msg)
     except:
         logger.error(traceback.format_exc())

@@ -3,6 +3,7 @@ let angle = 0;
 let vocalsVolume = localStorage.getItem("vocalsVolume")? parseFloat(localStorage.getItem("vocalsVolume")): 1;
 let accompanimentVolume = localStorage.getItem("accompanimentVolume")? parseFloat(localStorage.getItem("accompanimentVolume")): 1;
 let isBindEvent = false;
+let searchTimeout = null;
 const l_body = document.querySelector('.l_body');
 const sidebar = {
   leftbar: () => {
@@ -51,22 +52,25 @@ document.getElementById("guzhang").addEventListener('click', () => {send_message
 document.getElementById("huanhu").addEventListener('click', () => {send_message(7, 'huanhu');})
 document.getElementById("daxiao").addEventListener('click', () => {send_message(7, 'daxiao');})
 document.getElementById("xixu").addEventListener('click', () => {send_message(7, 'xixu');})
-document.getElementById("search-song").addEventListener('click', () => {
-    let keyWord = document.getElementById("search-text").value;
-    if (keyWord === undefined || keyWord === '') {return;}
-    $.ajax({
-        type: "GET",
-        url: server + "/song/list?q=" + keyWord,
-        success: function (data) {
-            if (data.code === 0) {
-                let s = "";
-                data.data.forEach(item => {
-                    s = s + `<div class="song-list"><div>${item.name}</div><a onclick="sing_song(${item.id})">点歌</a></div>`
-                })
-                document.getElementsByClassName("song-container")[0].innerHTML = s;
+document.getElementById("search-text").addEventListener('input', () =>{
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        let keyWord = document.getElementById("search-text").value;
+        if (keyWord === undefined || keyWord === '') {document.getElementsByClassName("song-container")[0].innerHTML = ''; return;}
+        $.ajax({
+            type: "GET",
+            url: server + "/song/list?q=" + keyWord,
+            success: function (data) {
+                if (data.code === 0) {
+                    let s = "";
+                    data.data.forEach(item => {
+                        s = s + `<div class="song-list"><div>${item.name}</div><a onclick="sing_song(${item.id})">点歌</a></div>`
+                    })
+                    document.getElementsByClassName("song-container")[0].innerHTML = s;
+                }
             }
-        }
-    })
+        })
+    }, 500)
 })
 document.getElementById("change-volume").addEventListener("click", () => {
     let volume_setting = document.getElementsByClassName("volume-setting")[0];

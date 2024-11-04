@@ -1,4 +1,5 @@
 const server = localStorage.getItem("server");
+let songListTimeout = null;
 document.getElementById("file-upload").addEventListener('click', () => {
     let fileUpload_input = document.getElementById("file-input");
     fileUpload_input.click();
@@ -65,7 +66,10 @@ document.getElementById("file-upload").addEventListener('click', () => {
     }
 })
 
-document.getElementById("search").addEventListener('click', () => {get_song_list();})
+document.getElementById("file-search").addEventListener('input', () => {
+    clearTimeout(songListTimeout);
+    songListTimeout = setTimeout(() => {get_song_list();}, 500)
+})
 
 document.getElementById("generate_code").addEventListener('click', () => {
     let qrcodeEle = document.getElementsByClassName("qrcode")[0];
