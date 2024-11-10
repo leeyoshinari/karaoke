@@ -16,6 +16,7 @@ from settings import logger, FILE_PATH, PAGE_SIZE, VIDEO_PATH
 
 
 clients: List[asyncio.Queue] = []
+ffmpeg_cmd = 'ffmpeg'
 
 
 async def broadcast_data(data: dict):
@@ -274,14 +275,14 @@ async def deal_video(file_name: str) -> Result:
         file_name = unquote(file_name)
         name = file_name.replace(".mp4", "")
         mp4_file = os.path.join(VIDEO_PATH, f"{name}_origin.mp4")
-        mp3_file = os.path.join(VIDEO_PATH, f"{name}.mp3")
-        cmd1 = ['ffmpeg', '-i', mp4_file, '-q:a', '0', '-map', 'a', mp3_file]
+        mp3_file = os.path.join(VIDEO_PATH, f"{name}.wav")
+        cmd1 = [ffmpeg_cmd, '-i', mp4_file, '-q:a', '0', '-map', 'a', mp3_file]
         subprocess.run(cmd1, check=True)
         no_voice_file = os.path.join(VIDEO_PATH, f"{name}_voice.mp4")
-        cmd2 = ['ffmpeg', '-i', mp4_file, '-an', '-vcodec', 'copy', no_voice_file]
+        cmd2 = [ffmpeg_cmd, '-i', mp4_file, '-an', '-vcodec', 'copy', no_voice_file]
         subprocess.run(cmd2, check=True)
         video_file = os.path.join(VIDEO_PATH, f"{name}.mp4")
-        cmd3 = ['ffmpeg', '-i', no_voice_file, '-map_metadata', '0', '-c:v', 'copy', '-c:a', 'copy', '-movflags', '+faststart', video_file]
+        cmd3 = [ffmpeg_cmd, '-i', no_voice_file, '-map_metadata', '0', '-c:v', 'copy', '-c:a', 'copy', '-movflags', '+faststart', video_file]
         subprocess.run(cmd3, check=True)
         result.data = {"mp3": f"{name}.wav", "video": f"{name}.mp4"}
         logger.info(result.msg)
@@ -300,7 +301,7 @@ async def convert_video(file_name: str) -> Result:
         name = file_name.replace(f".{file_format}", "")
         audio_file = os.path.join(VIDEO_PATH, f"{name}_origin.{file_format}")
         mp4_file = os.path.join(VIDEO_PATH, f"{name}.mp4")
-        cmd = ['ffmpeg', '-i', audio_file, '-c:v', 'libx264', '-c:a', 'aac', mp4_file]
+        cmd = [ffmpeg_cmd, '-i', audio_file, '-c:v', 'libx264', '-c:a', 'aac', mp4_file]
         subprocess.run(cmd, check=True)
         result.data = {"mp4": f"{name}.mp4", "video": f"{name}.{file_format}"}
         logger.info(result.msg)
@@ -319,7 +320,7 @@ async def convert_audio(file_name: str) -> Result:
         name = file_name.replace(f".{file_format}", "")
         audio_file = os.path.join(VIDEO_PATH, f"{name}_origin.{file_format}")
         mp3_file = os.path.join(VIDEO_PATH, f"{name}.mp3")
-        cmd = ['ffmpeg', '-i', audio_file, '-codec:a', 'libmp3lame', mp3_file]
+        cmd = [ffmpeg_cmd, '-i', audio_file, '-codec:a', 'libmp3lame', mp3_file]
         subprocess.run(cmd, check=True)
         result.data = {"mp3": f"{name}.mp3", "audio": f"{name}.{file_format}"}
         logger.info(result.msg)

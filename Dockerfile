@@ -8,4 +8,4 @@ RUN chmod +x init.sh
 RUN mkdir /KTV
 ENTRYPOINT ["./init.sh"]
 EXPOSE 15210
-CMD ["uvicorn", "main:agit pp", "--host", "0.0.0.0", "--port", "15210"]
+CMD ["uvicorn", "main:agit pp",git  "--host", "0.0.0.0", "--port", "15210"]

@@ -6,6 +6,8 @@ import asyncio
 import traceback
 from typing import List
 from settings import logger
+
+
 class SSE:
     def __init__(self):
         self.clients: List[asyncio.StreamWriter] = []
