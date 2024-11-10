@@ -22,8 +22,12 @@ def get_config(key):
     return cfg.get('default', key, fallback=None)
 
 
+FILE_PATH = get_config("path")
+if not os.path.exists(FILE_PATH):
+    raise FileNotFoundError(FILE_PATH)
+
 TORTOISE_ORM = {
-    "connections": {"default": get_config("dbUrl")},
+    "connections": {"default": f"sqlite://{FILE_PATH}/sqlite3.db"},
     "apps": {
         "models": {
             "models": ["karaoke.models", "aerich.models"],
@@ -34,9 +38,6 @@ TORTOISE_ORM = {
 }
 
 CONTENT_TYPE = {'mp4': 'video/mp4', 'mp3': 'audio/mpeg'}
-FILE_PATH = get_config("path")
-if not os.path.exists(FILE_PATH):
-    raise FileNotFoundError(FILE_PATH)
 
 VIDEO_PATH = os.path.join(path, 'static', 'videos')
 if os.path.exists(VIDEO_PATH):
