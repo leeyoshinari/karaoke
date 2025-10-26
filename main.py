@@ -51,7 +51,7 @@ async def index(request: Request):
 
 
 @app.get(prefix + "/dealVideo")
-async def index(request: Request):
+async def deal_video(request: Request):
     return templates.TemplateResponse("tool.html", {"request": request, "prefix": prefix})
 
 
@@ -61,7 +61,7 @@ async def play(request: Request):
 
 
 @app.get(prefix + "/song")
-async def index(request: Request):
+async def deal_song(request: Request):
     return templates.TemplateResponse("client.html", {"request": request, "prefix": prefix})
 
 

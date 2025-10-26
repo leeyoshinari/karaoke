@@ -63,19 +63,19 @@ async def set_top(file_id: int):
 
 
 @router.get("/setSinged/{file_id}", summary="设置已经播放过")
-async def set_top(file_id: int):
+async def set_singed(file_id: int):
     result = await views.set_singed(file_id)
     return result
 
 
 @router.get("/setSinging/{file_id}", summary="设置正在播放")
-async def set_top(file_id: int):
+async def set_dinging(file_id: int):
     result = await views.set_singing(file_id)
     return result
 
 
 @router.post('/upload/video', summary="上传视频")
-async def upload_file(query: Request):
+async def upload_video_file(query: Request):
     result = await views.upload_video(query)
     return result
 
@@ -136,4 +136,3 @@ async def send_event(code: int, data, request: Request):
 # code = 6: 调整伴奏音量，data 为音量值
 # code = 7: 互动，data 为互动方式
 # code = 8: 查询已点歌曲列表
-
