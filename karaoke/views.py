@@ -329,3 +329,28 @@ async def convert_audio(file_name: str) -> Result:
         result.code = 1
         result.msg = "系统错误"
     return result
+
+
+async def import_local_file(file_path: str) -> Result:
+    import shutil
+    result = Result()
+    try:
+        file_path_list = sorted(os.scandir(file_path), key=lambda x: x.stat().st_mtime)
+        for entry in file_path_list:
+            file_path = entry.path
+            try:
+                song_name = entry.name.replace('.mp4', '').replace('_vocals.mp3', '').replace('_accompaniment.mp3', '')
+                shutil.move(file_path, FILE_PATH)
+                try:
+                    _ = await Files.get(name=song_name)
+                except DoesNotExist:
+                    _ = await Files.create(name=song_name, is_sing=0)
+                logger.info(f"{file_path} move successfully ~")
+            except:
+                logger.error(traceback.format_exc())
+        result.data = file_path
+        logger.info(result.msg)
+    except:
+        result.code = 1
+        logger.error(traceback.format_exc())
+    return result
