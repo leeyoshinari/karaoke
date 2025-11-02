@@ -98,7 +98,7 @@ async def convert_video(file_name: str, query: Request):
     return result
 
 
-@router.get('/local/import/{local_path}', summary="从本地路径导入歌曲文件")
+@router.get('/local/import', summary="从本地路径导入歌曲文件")
 async def import_local(local_path: str, query: Request):
     result = await views.convert_video(local_path)
     return result
