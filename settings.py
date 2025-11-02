@@ -62,6 +62,6 @@ logger.setLevel(level=log_level.get(get_config("level")))
 
 file_handler = logging.handlers.TimedRotatingFileHandler(os.path.join(log_path, 'access.log'), when='midnight', interval=1, backupCount=7)
 file_handler.suffix = '%Y-%m-%d'
-file_handler = logging.StreamHandler()
+# file_handler = logging.StreamHandler()
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
