@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>卡拉OK</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/index.css">
     <link rel="stylesheet" href="/static/css/toast.style.css">
     <script type="text/javascript" src="/static/js/jq.min.js"></script>
@@ -20,7 +21,8 @@
             <a href="#" id="file-upload" style="">上传文件</a>
             <a href="#" id="generate_code" style="">手机点歌</a>
             <div class="qrcode"><div id="qrcode"></div></div>
-            <a href="{{ prefix }}/sing" target="_blank" style="">开始K歌</a>
+            <a href="{{ prefix }}/sing" target="_blank" style="">开始K歌(推荐)</a>
+            <a href="{{ prefix }}/sing?type=1" target="_blank" style="">开始K歌(备用)</a>
         </div>
         <div style="display: flex; align-items: center; margin-top: 1rem;">
             <a href="#" onclick="get_song_list()" style="">曲库列表</a>

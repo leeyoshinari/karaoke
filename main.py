@@ -57,7 +57,8 @@ async def deal_video(request: Request):
 
 @app.get(prefix + "/sing")
 async def play(request: Request):
-    return templates.TemplateResponse("playing.html", {"request": request, "prefix": prefix})
+    platform = request.query_params.get('type', None)
+    return templates.TemplateResponse("playing.html", {"request": request, "prefix": prefix, "platform": platform})
 
 
 @app.get(prefix + "/song")

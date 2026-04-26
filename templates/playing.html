@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>卡拉OK</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/ktv.css">
     <link rel="stylesheet" href="/static/css/toast.style.css">
     <script type="text/javascript" src="/static/js/jq.min.js"></script>
@@ -16,14 +17,8 @@
         <source src="" type="video/mp4">
         你的浏览器不支持视频标签。
     </video>
-    <audio style="display: none;" id="vocals" controls preload="auto">
-        <source src="" type="audio/mpeg">
-        你的浏览器不支持音频标签。
-    </audio>
-    <audio style="display: none;" id="accompaniment" controls preload="auto">
-        <source src="" type="audio/mpeg">
-        你的浏览器不支持音频标签。
-    </audio>
+    <audio style="display: none;" id="vocals" crossorigin="anonymous" preload="auto"></audio>
+    <audio style="display: none;" id="accompaniment" crossorigin="anonymous" preload="auto"></audio>
     <audio style="display: none;" id="interruption" controls preload="auto">
         <source src="" type="audio/mpeg">
         你的浏览器不支持音频标签。
@@ -58,5 +53,9 @@
 <script>
     localStorage.setItem("server", "{{ prefix }}");
 </script>
+{% if platform %}
+<script type="text/javascript" src="/static/js/ktv-bak.js"></script>
+{% else %}
 <script type="text/javascript" src="/static/js/ktv.js"></script>
+{% endif %}
 </html>
