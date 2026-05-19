@@ -47,23 +47,23 @@ async def read_file(file_path, start_index=0):
 
 @app.get(prefix + "/")
 async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "prefix": prefix})
+    return templates.TemplateResponse(request=request, name="index.html", context={"request": request, "prefix": prefix})
 
 
 @app.get(prefix + "/dealVideo")
 async def deal_video(request: Request):
-    return templates.TemplateResponse("tool.html", {"request": request, "prefix": prefix})
+    return templates.TemplateResponse(request=request, name="tool.html", context={"request": request, "prefix": prefix})
 
 
 @app.get(prefix + "/sing")
 async def play(request: Request):
     platform = request.query_params.get('type', None)
-    return templates.TemplateResponse("playing.html", {"request": request, "prefix": prefix, "platform": platform})
+    return templates.TemplateResponse(request=request, name="playing.html", context={"request": request, "prefix": prefix, "platform": platform})
 
 
 @app.get(prefix + "/song")
 async def deal_song(request: Request):
-    return templates.TemplateResponse("client.html", {"request": request, "prefix": prefix})
+    return templates.TemplateResponse(request=request, name="client.html", context={"request": request, "prefix": prefix})
 
 
 @app.get(prefix + "/download/{file_name}", summary="Download file (获取文件)")
